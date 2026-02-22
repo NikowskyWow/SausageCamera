@@ -112,7 +112,7 @@ gitHeader:SetPoint("TOP", 0, 12)
 
 local gitTitle = GitFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 gitTitle:SetPoint("TOP", gitHeader, "TOP", 0, -14)
-gitTitle:SetText("COMMUNITY & UPDATES")
+gitTitle:SetText("UPDATE LINK")
 
 local gitClose = CreateFrame("Button", nil, GitFrame, "UIPanelCloseButton")
 gitClose:SetPoint("TOPRIGHT", -8, -8)
