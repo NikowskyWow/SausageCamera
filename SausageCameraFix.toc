@@ -1,0 +1,9 @@
+## Interface: 30300
+## Title: Sausage Camera Fix
+## Notes: Unlocks maximum camera distance beyond the standard UI limits.
+## Author: Sausage Party / Kokotiar
+## Version: @SAUSAGE_VERSION@
+## DefaultState: Enabled
+## LoadOnDemand: 0
+
+SausageCameraFix.lua
