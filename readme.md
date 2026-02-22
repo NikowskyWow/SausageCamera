@@ -38,6 +38,6 @@ Join our Discord for support, bug reports, and to find other addons.
 ---
 
 ## 📌 Technical Specifications
-* **Addon Version:** 
+* **Addon Version:** 1.0.0
 * **Game Version:** World of Warcraft: Wrath of the Lich King (3.3.5a)
 * **Tested On:** Warmane (Onyxia Realm)

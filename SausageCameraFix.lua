@@ -4,7 +4,7 @@
 -- ============================================================================
 
 -- Lokálne premenné pre verziu (nahradí sa skriptom na githube)
-local SAUSAGE_VERSION = "@SAUSAGE_VERSION@"
+local SAUSAGE_VERSION = "1.0.0"
 
 -- ============================================================================
 -- HLAVNÝ RÁM (Main Frame)
