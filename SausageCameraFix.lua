@@ -24,11 +24,13 @@ tinsert(UISpecialFrames, "SausageCameraFixMainFrame")
 
 -- Nastavenie Blizzard Native Backdrop
 mainFrame:SetBackdrop({
-    bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
-    edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
-    tile = true, tileSize = 32, edgeSize = 32,
-    insets = { left = 11, right = 12, top = 12, bottom = 11 }
+    bgFile = "Interface\\ChatFrame\\ChatFrameBackground",
+    edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+    tile = true, tileSize = 16, edgeSize = 14,
+    insets = { left = 3, right = 3, top = 3, bottom = 3 }
 })
+mainFrame:SetBackdropColor(0.05, 0.05, 0.05, 0.95)
+mainFrame:SetBackdropBorderColor(1, 0.6, 0, 1) -- Sausage Orange
 
 -- Zatváracie tlačidlo (pravý horný roh)
 local closeButton = CreateFrame("Button", nil, mainFrame, "UIPanelCloseButton")
@@ -43,7 +45,7 @@ headerTexture:SetPoint("TOP", mainFrame, "TOP", 0, 12)
 
 local headerText = mainFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 headerText:SetPoint("TOP", headerTexture, "TOP", 0, -14)
-headerText:SetText("Sausage Camera Fix")
+headerText:SetText("|cffff8800Sausage|r Camera Fix")
 
 -- ============================================================================
 -- VNÚTORNÁ SEKCIA (Content Box - Vycentrovaná)
@@ -59,8 +61,8 @@ contentBox:SetBackdrop({
     insets = { left = 4, right = 4, top = 4, bottom = 4 }
 })
 -- Nastavenie farieb pre všeobecný box (Modrá: 0, 0.7, 1, 1)
-contentBox:SetBackdropColor(0.1, 0.1, 0.1, 0.8)
-contentBox:SetBackdropBorderColor(0, 0.7, 1, 1)
+contentBox:SetBackdropColor(0, 0, 0, 0.7)
+contentBox:SetBackdropBorderColor(1, 0.6, 0, 0.5)
 
 -- Názov sekcie vycentrovaný na vrch boxu
 local contentTitle = contentBox:CreateFontString(nil, "OVERLAY", "GameFontNormal")
@@ -96,11 +98,13 @@ GitFrame:SetSize(320, 130)
 GitFrame:SetPoint("CENTER")
 GitFrame:SetFrameStrata("DIALOG") -- Zaistí, že okno bude vždy úplne navrchu
 GitFrame:SetBackdrop({
-    bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
-    edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
-    tile = true, tileSize = 32, edgeSize = 32,
-    insets = { left = 11, right = 12, top = 12, bottom = 11 }
+    bgFile = "Interface\\ChatFrame\\ChatFrameBackground",
+    edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+    tile = true, tileSize = 16, edgeSize = 14,
+    insets = { left = 3, right = 3, top = 3, bottom = 3 }
 })
+GitFrame:SetBackdropColor(0.05, 0.05, 0.05, 0.95)
+GitFrame:SetBackdropBorderColor(1, 0.6, 0, 1)
 tinsert(UISpecialFrames, "SausageCameraFixGitFrame") -- Umožní zatváranie okna pomocou ESC
 GitFrame:Hide()
 
@@ -161,7 +165,7 @@ versionText:SetText("v " .. SAUSAGE_VERSION)
 -- Credits (stred)
 local creditsText = mainFrame:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
 creditsText:SetPoint("BOTTOM", mainFrame, "BOTTOM", 0, 15)
-creditsText:SetText("by Sausage Party")
+creditsText:SetText("|cffff8800by Sausage Party|r")
 
 -- Tlačidlo Check Updates (vpravo dole)
 local updateButton = CreateFrame("Button", nil, mainFrame, "UIPanelButtonTemplate")
@@ -185,3 +189,45 @@ SlashCmdList["SAUSAGECAMERA"] = function()
         mainFrame:Show()
     end
 end
+
+-- ============================================================================
+-- MINIMAP BUTTON
+-- ============================================================================
+local mmBtn = CreateFrame("Button", "SausageCameraMinimapBtn", Minimap)
+mmBtn:SetSize(31, 31); mmBtn:SetFrameStrata("MEDIUM"); mmBtn:SetFrameLevel(8)
+mmBtn:RegisterForClicks("LeftButtonUp")
+mmBtn:RegisterForDrag("LeftButton")
+mmBtn:SetHighlightTexture("Interface\\Minimap\\UI-Minimap-ZoomButton-Highlight")
+
+local icon = mmBtn:CreateTexture(nil, "BACKGROUND")
+icon:SetTexture("Interface\\Icons\\Ability_Spy")
+icon:SetSize(20, 20); icon:SetPoint("CENTER")
+
+local border = mmBtn:CreateTexture(nil, "OVERLAY")
+border:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder")
+border:SetSize(52, 52); border:SetPoint("TOPLEFT")
+border:SetVertexColor(1, 0.6, 0) -- Sausage Orange
+
+local badge = mmBtn:CreateTexture(nil, "OVERLAY")
+badge:SetTexture("Interface\\Icons\\Inv_Misc_Food_53")
+badge:SetSize(12, 12); badge:SetPoint("BOTTOMRIGHT", -2, 2)
+
+local function UpdatePosition()
+    local angle = math.rad(45) -- Default
+    local x, y = math.cos(angle) * 80, math.sin(angle) * 80
+    mmBtn:SetPoint("CENTER", Minimap, "CENTER", x, y)
+end
+
+mmBtn:SetScript("OnClick", function()
+    if mainFrame:IsShown() then mainFrame:Hide() else mainFrame:Show() end
+end)
+
+mmBtn:SetScript("OnEnter", function(self)
+    GameTooltip:SetOwner(self, "ANCHOR_LEFT")
+    GameTooltip:AddLine("|cffff8800Sausage|r Camera Fix", 1, 1, 1)
+    GameTooltip:AddLine("|cffff8800Sausage Party Member|r")
+    GameTooltip:AddLine("Left-Click to toggle configuration.", 1, 0.8, 0)
+    GameTooltip:Show()
+end)
+mmBtn:SetScript("OnLeave", GameTooltip_Hide)
+UpdatePosition()
